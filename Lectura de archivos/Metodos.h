@@ -15,7 +15,6 @@ public:
 	void metodo_uno(char* name);
 	void metodo_dos(char* name);
 	void metodo_tres(char* name);
-	void metodo_cuatro(char * name);
 	
 
 

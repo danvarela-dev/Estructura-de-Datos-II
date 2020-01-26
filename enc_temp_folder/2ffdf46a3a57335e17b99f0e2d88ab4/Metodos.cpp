@@ -31,7 +31,7 @@ void Metodos::metodo_dos(char* name) {
     ifstream fe(name);
     while (!fe.eof()) {
         fe >> cadena;
-        cout << cadena << " ";
+        cout << cadena << endl;
     }
 
 
@@ -40,7 +40,7 @@ void Metodos::metodo_dos(char* name) {
 
 
 
-void Metodos::metodo_tres(char* name) { 
+void Metodos::metodo_tres(char* name) {
     string line;
 
     strcat(name, ".txt");
