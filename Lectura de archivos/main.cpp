@@ -1,6 +1,6 @@
 #include "Metodos.h"
 #include <fstream>
-#include <ctime>
+#include <time.h>
 
 using namespace std;
 
@@ -9,13 +9,13 @@ int main() {
 
     do {
         Metodos m;
-        cout << "Ingrese el nombre del archivo: ";
+        cout << "\nIngrese el nombre del archivo: ";
+        
         char name[30];
         cin >> name;
-        cout << "\nIngrese el metodo a probar:\n1. Metodo Uno\n2. Metodo Dos\n3. Metodo Tres";
+        cout << "\nIngrese el metodo a probar:\n1. Metodo Uno\n2. Metodo Dos\n3. Metodo Tres\nIngrese Opcion: ";
         cin >> opt;
-        clock_t t;
-        t = clock();
+        clock_t tStart = clock();
 
         switch (opt)
         {
@@ -31,11 +31,10 @@ int main() {
 
         }
 
-        t = clock() - t;
-        cout << "\n\nTiempo de ejecucion: ";
-        cout << t;
+        printf("\n\nTime taken: %.2fs\n", (double)(clock() - tStart) / CLOCKS_PER_SEC);
+      
 
-        cout << "Inserte -1 para salir...";
+        cout << "\nInserte -1 para salir...";
     } while (opt != -1);
 
 }
