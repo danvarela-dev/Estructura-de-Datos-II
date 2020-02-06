@@ -39,7 +39,6 @@ void Metodos::metodo_dos(char* name) {
 }
 
 
-
 void Metodos::metodo_tres(char* name) { 
     string line;
 

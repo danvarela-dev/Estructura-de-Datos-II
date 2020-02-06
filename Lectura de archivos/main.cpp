@@ -5,7 +5,7 @@
 using namespace std;
 
 int main() {
-    int opt = 0;
+   /* int opt = 0;
 
     do {
         Metodos m;
@@ -35,6 +35,9 @@ int main() {
       
 
         cout << "\nInserte -1 para salir...";
-    } while (opt != -1);
+    } while (opt != -1);*/
+
+
+  
 
 }
