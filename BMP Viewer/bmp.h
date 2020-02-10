@@ -6,7 +6,7 @@
 using namespace std;
 
 #pragma pack(push, 1)
-struct header{
+struct Headers{
 
 	char signature[2];
 	uint32_t fileSize;
@@ -15,10 +15,6 @@ struct header{
 	uint32_t dataOffset;
 
 };
-#pragma pack(push, 1)
-
-
-#pragma pack(pop)
 
 struct headerInfo {
 	uint32_t size;
@@ -35,29 +31,26 @@ struct headerInfo {
 };
 
 #pragma pack(pop)
-//struct headerinfo {
-//	uint32_t size;
-//	uint32_t width;
-//	uint32_t height;
-//	uint16_t planes;
-//	uint16_t bitCount;
-//	uint32_t compression;
-//	uint32_t imageSize;
-//	uint32_t x_pixels;
-//	uint32_t y_pixels;
-//	uint32_t colorsUsed;
-//	uint32_t importantColors;
-//};
+
+struct colorPallete {
+	uint8_t B;
+	uint8_t G;
+	uint8_t R;
+	uint8_t Padding;
+};
+
 
 class Mybitmap {
 private:
 	char* file_name;
 	ifstream file_bmp;
-	header reg_header;
+	Headers reg_header;
 	headerInfo reg_headerInfo;
+	colorPallete reg_colorPallete;
 
 	void readHeader();
 	void read_headerInfo();
+	void read_colorPallete();
 
 public:
 	void openBMP(const char *);

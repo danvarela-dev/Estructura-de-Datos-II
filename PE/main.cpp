@@ -5,7 +5,7 @@ using namespace std;
 #pragma pack(push, 1)
 
 struct IMAGE_DOS_HEADER {
-    uint16_t e_magic;         // Magic number
+    char e_magic[2];         // Magic number
     uint16_t e_cblp;          // Bytes on last page of file
     uint16_t e_cp;            // Pages in file
     uint16_t e_crlc;          // Relocations
@@ -14,12 +14,12 @@ struct IMAGE_DOS_HEADER {
     uint16_t e_maxalloc;      // Maximum extra paragraphs needed
     uint16_t e_ss;            // Initial (relative) SS value
     uint16_t e_sp;            // Initial SP value
-    uint16_t e_csum;          // Checksum
+    uint16_t e_csum;          // Checksum 
     uint16_t e_ip;            // Initial IP value
     uint16_t e_cs;            // Initial (relative) CS value
     uint16_t e_lfarlc;        // File address of relocation table
     uint16_t e_ovno;          // Overlay number
-    char e_res[4];        // Reserved words
+    char e_res[4];            //Reserved words
     uint16_t e_oemid;         // OEM identifier (for e_oeminfo)
     uint16_t e_oeminfo;       // OEM information; e_oemid specific
     char e_res2[10];      // Reserved words
@@ -33,12 +33,16 @@ int main() {
 
     ifstream file_PE;
     IMAGE_DOS_HEADER dos_header;
-    file_PE.open("C://Windows//System32//notepad.exe", ifstream::in, ifstream::binary);
+    file_PE.open("C://Windows//System32//cmd.exe", ifstream::in, ifstream::binary);
     file_PE.read((char*)&dos_header, sizeof(dos_header));
 
 
     char e_res[5];
     char e_res2[11];
+    char magic[3];
+    magic[0] = dos_header.e_magic[0];
+    magic[1] = dos_header.e_magic[1];
+    magic[2] = '\0';
 
     e_res[4] = '\0';
     e_res[0] = dos_header.e_res[0];
@@ -59,12 +63,8 @@ int main() {
     e_res2[8] = dos_header.e_res2[8];
     e_res2[9] = dos_header.e_res2[9];
     
-
-
-
-
   
-    cout << "e_magic: " << dos_header.e_magic  << endl;
+    cout << "e_magic: " << magic  << endl;
         cout << "e_cblp: " << dos_header.e_cblp << endl;
         cout << "e_cp: " << dos_header.e_cp << endl;
     cout << "e_crlc: " << dos_header.e_crlc  << endl;

@@ -9,12 +9,17 @@ void Mybitmap::read_headerInfo() {
 	file_bmp.seekg(sizeof(reg_header), ios_base::beg);
 	file_bmp.read((char*)&reg_headerInfo, sizeof(reg_headerInfo));
 }
+void Mybitmap::read_colorPallete() {
+	file_bmp.seekg(sizeof(reg_header) + sizeof(reg_headerInfo), ios_base::beg);
+	file_bmp.read((char*)&reg_colorPallete, sizeof(reg_colorPallete));
+	}
 
 void Mybitmap::openBMP(const char* filename) {
 	file_name = (char*)filename;
 	file_bmp.open(filename, ifstream::in | ifstream::binary);
 	readHeader();
 	read_headerInfo();
+	read_colorPallete();
 }
 
 void Mybitmap::printHeader() {
@@ -47,7 +52,11 @@ void Mybitmap::printHeader() {
 	cout << "Y Pixels Per M: " << reg_headerInfo.yPixelsPerM << endl;
 	cout << "Colors Used: " << reg_headerInfo.colorsUsed << endl;
 	cout << "Colors Important: " << reg_headerInfo.colorsImportant << endl;
-	cout << "********************************************";
+	cout << "********************* Color Pallete ***********************" << endl;
+	cout << "B: " << reg_colorPallete.B << endl;
+	cout << "G: " << reg_colorPallete.G << endl;
+	cout << "R: " << reg_colorPallete.R << endl;
+	cout << "Padding" << reg_colorPallete.Padding << endl;
 
 
 
