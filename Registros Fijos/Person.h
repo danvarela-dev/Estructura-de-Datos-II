@@ -1,7 +1,7 @@
-#pragma once
-using namespace std;
 #include <iostream>
 #include  <fstream>
+
+using namespace std;
 
 struct registro{
     char LastName[16];
@@ -15,8 +15,9 @@ struct registro{
 
 class Person {
 private:
-    fstream file;
     registro reg;
+    ofstream oFilePersons;
+    ifstream iFilePersons;
 
 public:
     char LastName_aux[16];
@@ -27,9 +28,12 @@ public:
     char ZipCode_aux[10];
     Person();
 
+    
 
     void transferBuffer(registro);
-    void save_toFile(const char *, const char * , const char *)
-    void readFile(const char*);
+    void save_Registry();
+    void write(const char *, const char*, const char *, const char *,const char * , const char *);
+
+    void readFile(const char* );
     void Print();
 };

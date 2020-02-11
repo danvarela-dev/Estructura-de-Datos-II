@@ -2,34 +2,46 @@
 
 using namespace std;
 
-void MyBitmap::readHeader() {
+void MyBitmap::readHeaders() {
 	file_bmp.seekg(0, ios_base::beg);
-	
+
 	file_bmp.read(bufferHeader_aux, sizeof(bufferHeader_aux));
 	file_bmp.read(buffer_headerInfo_aux, sizeof(buffer_headerInfo_aux));
-	
+	file_bmp.read((char*)&BLUE, sizeof(BLUE));
+	file_bmp.read((char*)&GREEN, sizeof(GREEN));
+	file_bmp.read((char*)&RED, sizeof(RED));
+	file_bmp.read((char*)&RESERVED4PADDING, sizeof(RESERVED4PADDING));
 
 	bmpHeader.setHeaderBuffer(bufferHeader_aux);
 	bmpHeader.setHeader_infoBuffer(buffer_headerInfo_aux);
-
-	int inicio = bmpHeader.headerSize;
-	int width = bmpHeader.imageWidth;
-	int height = bmpHeader.imageHeight;
-
-	//file_bmp.seekg(inicio);
-
-	int imagesize = 0;
-	width += (3 * width) & 4;//paddeo
-	imagesize = 3 * width * height;
-	int R = 0, G = 0, B =0;
-
+	bmpHeader.setColorPallete_Buffer((char*)BLUE, (char*)GREEN, (char*)RED , (char*)RESERVED4PADDING);
 
 }	
 
-void MyBitmap::openBMP(const char* filename) 
+void MyBitmap::readPixels() {
+	int height = bmpHeader.imageHeight;
+	int width = bmpHeader.imageWidth;
+
+	int pixelDimensions = width * height;
+	int padding = (4 - (width * 3) % 4) % 4 ;
+
+		 
+	//file_bmp.seekg(bmpHeader.dataOffset);
+	//file_bmp.read((char*)&bgr, sizeof(bgr));
+	
+
+}
+
+MyBitmap::MyBitmap()
+{
+}
+
+void MyBitmap::openBMP(const char* filename)
 {
 	file_bmp.open(filename, ifstream::in | ifstream::binary);
-	readHeader();
+	readHeaders();
+	//readPixels();
+	file_bmp.close();
 	
 }
 
@@ -55,6 +67,8 @@ void MyBitmap::print_metaData() {
 	cout << "Colors Important: " << bmpHeader.importantColors << endl;
 	cout << "********************* C O L O R  P A L L E T E ***********************" << endl;
 
+	
+
 
 
 
@@ -77,9 +91,15 @@ void Headers::setHeader_infoBuffer(const char* buffer) {
 		unPack();
 }
 
-void Headers::setColorPallete_Buffer(const char * buffer) {
-	memcpy(buffer_colorPallete, buffer, 4);
-	unPack();
+void Headers::setColorPallete_Buffer(char B, char G, char R, char padding) {
+	char BGR_AUX[5];
+	BGR_AUX[0] = B;
+	BGR_AUX[1] = G;
+	BGR_AUX[2] = R;
+	BGR_AUX[4] = padding;
+
+	memcpy(BGR,BGR_AUX, 4);
+	
 }
 
 void Headers::Init()
@@ -103,10 +123,7 @@ void Headers::Init()
 	totalColors = 0 ;
 	importantColors = 0 ;
 	//colors 
-	RED = 0;
-	GREEN = 0;
-	BLUE = 0;
-	RESERVED_4PADDING = 0;
+	
 
 }
 
@@ -133,11 +150,5 @@ void Headers::unPack() {
 	memcpy(&totalColors, d += 4, 4);
 	memcpy(&importantColors, d += 4, 4);
 
-	char * e = buffer_colorPallete;
-	memcpy(&BLUE, e, 1);
-	memcpy(&GREEN, e +1, 1);
-	memcpy(&RED, e +1, 1);
-	memcpy(&RESERVED_4PADDING, e +1, 1);
-
-}
+	}
 

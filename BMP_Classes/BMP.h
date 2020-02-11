@@ -2,14 +2,19 @@
 #define BMP_H
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 using namespace std;
+
+
 
 class Headers {
 private:
 	char bufferHeader[14];
 	char buffer_headerInfo[40];
-	char buffer_colorPallete[256];
+	char BGR[4];
+
+
 
 	void unPack();
 	void Init();
@@ -34,17 +39,11 @@ public:
 	uint32_t totalColors;
 	uint32_t importantColors;
 	//color table
-
-	uint8_t BLUE;
-	uint8_t GREEN;
-	uint8_t RED;
-	uint8_t RESERVED_4PADDING;
-
-
+	
 	Headers();
 	void setHeaderBuffer(const char *);
 	void setHeader_infoBuffer(const char*);
-	void setColorPallete_Buffer(const char * );
+	void setColorPallete_Buffer(const char *, const char *, const char * ,const char *);
 	
 };
 
@@ -54,17 +53,26 @@ private:
 	char* file_name;
 	char bufferHeader_aux[14];
 	char buffer_headerInfo_aux[40];
-	char 
+
 
 	ifstream file_bmp;
 
 	Headers bmpHeader;
+	
+	char BLUE;
+	char GREEN;
+	char RED;
+	char RESERVED4PADDING;
 
-	void readHeader();
+
+
+	void readHeaders();
+	void readPixels();
 	
 
 public:
 	
+	MyBitmap();
 	void openBMP(const char*);
 	void print_metaData();
 
