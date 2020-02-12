@@ -12,7 +12,7 @@ void Person::Print() {
         cout << "Error opening file..." << endl;
         return;
     }
-    string s;
+    string s;dddd
 
     cout << "First Name: " << setw(8) << "Last Name:" << setw(8)
         << "Address:" << setw(8)
