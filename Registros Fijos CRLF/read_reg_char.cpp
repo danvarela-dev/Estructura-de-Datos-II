@@ -2,7 +2,7 @@
 
 int main() {
 	Person person;
-	person.save_Registry();
-	//person.readFile("Persons.dat");
-
+	//person.save_Registry();
+	person.readFile("Persons.dat");
+	person.Print();
 }
