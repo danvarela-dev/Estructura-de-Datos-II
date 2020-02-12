@@ -19,6 +19,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Norbit", "Norbit\Norbit.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Registros Fijos", "Registros Fijos\Registros Fijos.vcxproj", "{663D060F-04D4-4A92-BD48-15F4BF462501}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Registros Fijos CRLF", "Registros Fijos CRLF\Registros Fijos CRLF.vcxproj", "{4AD71D19-2D39-48BE-A4E6-7EA910FE6035}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -91,6 +93,14 @@ Global
 		{663D060F-04D4-4A92-BD48-15F4BF462501}.Release|x64.Build.0 = Release|x64
 		{663D060F-04D4-4A92-BD48-15F4BF462501}.Release|x86.ActiveCfg = Release|Win32
 		{663D060F-04D4-4A92-BD48-15F4BF462501}.Release|x86.Build.0 = Release|Win32
+		{4AD71D19-2D39-48BE-A4E6-7EA910FE6035}.Debug|x64.ActiveCfg = Debug|x64
+		{4AD71D19-2D39-48BE-A4E6-7EA910FE6035}.Debug|x64.Build.0 = Debug|x64
+		{4AD71D19-2D39-48BE-A4E6-7EA910FE6035}.Debug|x86.ActiveCfg = Debug|Win32
+		{4AD71D19-2D39-48BE-A4E6-7EA910FE6035}.Debug|x86.Build.0 = Debug|Win32
+		{4AD71D19-2D39-48BE-A4E6-7EA910FE6035}.Release|x64.ActiveCfg = Release|x64
+		{4AD71D19-2D39-48BE-A4E6-7EA910FE6035}.Release|x64.Build.0 = Release|x64
+		{4AD71D19-2D39-48BE-A4E6-7EA910FE6035}.Release|x86.ActiveCfg = Release|Win32
+		{4AD71D19-2D39-48BE-A4E6-7EA910FE6035}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

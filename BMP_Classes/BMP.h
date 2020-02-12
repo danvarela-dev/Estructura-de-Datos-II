@@ -12,8 +12,6 @@ class Headers {
 private:
 	char bufferHeader[14];
 	char buffer_headerInfo[40];
-	char BGR[4];
-
 
 
 	void unPack();
@@ -39,12 +37,14 @@ public:
 	uint32_t totalColors;
 	uint32_t importantColors;
 	//color table
-	
+
+
+
 	Headers();
-	void setHeaderBuffer(const char *);
+	void setHeaderBuffer(const char*);
 	void setHeader_infoBuffer(const char*);
-	void setColorPallete_Buffer(const char *, const char *, const char * ,const char *);
-	
+	void setColorPallete_Buffer(char, char, char, char);
+
 };
 
 class MyBitmap {
@@ -58,20 +58,20 @@ private:
 	ifstream file_bmp;
 
 	Headers bmpHeader;
-	
-	char BLUE;
-	char GREEN;
-	char RED;
-	char RESERVED4PADDING;
+
+	 uint8_t BLUE_aux;
+	 uint8_t GREEN_aux;
+	 uint8_t RED_aux;
+	 uint8_t RESERVED4PADDING_aux;
 
 
 
 	void readHeaders();
 	void readPixels();
-	
+
 
 public:
-	
+
 	MyBitmap();
 	void openBMP(const char*);
 	void print_metaData();
