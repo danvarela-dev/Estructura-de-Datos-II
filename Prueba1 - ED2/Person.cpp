@@ -21,10 +21,6 @@ void Person::Print() {
         << "Zip Code:" "\n";
 
 
-    while (getline(file, s, '|')) {
-
-        cout << s << setw(12);
-    }
 }
 
 void Person::PrintAll()
@@ -72,9 +68,8 @@ void Person::Write()
         cin >> reg.ZipCode;
         cout << endl << endl;
 
-        Pack();
 
-        file << sizeof(reg.FirstName )<< reg.FirstName << sizeof(LastName) << address << city << state << zipcode;
+        file << Pack();
 
     }
 
@@ -82,7 +77,7 @@ void Person::Write()
     write("Jose", "Alejo", "Jardines", "SPS", "NYC", "12112");
     write("Jack", "Gutz", "Jardines", "nyc", "NYC", "12112");*/
 
-    oFilePersons.close();
+    file.close();
 
 
    
@@ -91,6 +86,13 @@ void Person::Write()
 void Person::unPack(const char* buffer)
 {
     
+    char value[2];
+    int size;
+    //memcpy(buffer, value, 2);
+    size = atoi(value);
+
+    memcpy(LastName, );
+
 
 
 }
@@ -99,6 +101,7 @@ char * Person::Pack()
 {
     char* buffer;
     char value[2];
+
     itoa(sizeof(LastName), value , 10);
     strcat(buffer, value);
     strcat(buffer, LastName);
@@ -115,21 +118,23 @@ char * Person::Pack()
     strcat(buffer, Address);
     value[0] = 0;
 
-    itoa(sizeof(LastName), value, 10);
+    itoa(sizeof(City), value, 10);
     strcat(buffer, value);
-    strcat(buffer, LastName);
+    strcat(buffer, City);
 
     value[0] = 0;
-    itoa(sizeof(LastName), value, 10);
+    itoa(sizeof(State), value, 10);
     strcat(buffer, value);
-    strcat(buffer, LastName);
+    strcat(buffer, State);
     
     value[0] = 0;
     itoa(sizeof(LastName), value, 10);
     strcat(buffer, value);
-    strcat(buffer, LastName);
-    value[0] = 0;
+    strcat(buffer, ZipCode);
 
+    strcat(buffer, "|");
+    
+    return buffer;
 
 }
 
