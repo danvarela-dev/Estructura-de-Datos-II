@@ -29,7 +29,7 @@ public:
     void Print();
     void leerArch();
     void unPack(const char*);
-    char * Pack();
+    void Pack();
     void PrintAll();
     void Write();
 

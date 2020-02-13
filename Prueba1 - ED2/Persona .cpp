@@ -51,14 +51,7 @@ void Person::PrintAll()
 
 void Person::Write()
 {
-	file.open("Persons.dat", ios::app);
-
-	if (!file)
-	{
-		cout << "Error opening file..." << endl;
-		return;
-	}
-
+	
 	int quantity;
 
 	cout << "Enter amount of Persons: ";
@@ -82,7 +75,7 @@ void Person::Write()
 		cout << endl << endl;
 
 
-		file << Pack();
+		Pack();
 
 	}
 
@@ -232,6 +225,9 @@ char* Person::Pack()
 
 	strcat(buffer, "|");
 
-	return buffer;
+	ofstream file;
+	file.open("Persons.dat", ios::app | ios::out);
+	file << buffer;
+	file.close();
 
 }
