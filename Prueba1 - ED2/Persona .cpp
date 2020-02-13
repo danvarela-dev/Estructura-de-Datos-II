@@ -18,9 +18,10 @@ Person::Person()
 }
 
 void Person::Print() {
-	file.open("Persons.dat", ios::in);
+	ifstream iFilePersons;
+	iFilePersons.open("Persons.dat", ios::in);
 
-	if (!file) {
+	if (!iFilePersons) {
 		cout << "Error opening file..." << endl;
 		return;
 	}
@@ -33,6 +34,13 @@ void Person::Print() {
 		<< "Zip Code:" "\n";
 
 
+	while (getline(iFilePersons, s, '0')) {
+
+		cout << s << setw(12);
+	}
+
+
+	
 }
 
 void Person::PrintAll()
@@ -57,7 +65,6 @@ void Person::Write()
 	cout << "Enter amount of Persons: ";
 	cin >> quantity;
 
-
 	for (size_t i = 0; i < quantity; i++)
 	{
 		cout << endl << "First Name: ";
@@ -79,14 +86,6 @@ void Person::Write()
 
 	}
 
-	/*write("Daniel", "Varela", "Jardines", "SPS", "NYC", "12112");
-	write("Jose", "Alejo", "Jardines", "SPS", "NYC", "12112");
-	write("Jack", "Gutz", "Jardines", "nyc", "NYC", "12112");*/
-
-	file.close();
-
-
-
 }
 
 void Person::leerArch() {
@@ -99,12 +98,11 @@ void Person::leerArch() {
 	file.open(archivo);
 	file.seekg(0, ios_base::end);
 	int size = file.tellg();
-	/*char buffer[size + 1];
-
+	char * buffer = new char[size +1];
 	file.seekg(0, ios_base::beg);
 	file.read((char*)&buffer, sizeof(buffer));
 	file.close();
-	unPack(buffer);*/
+	unPack(buffer);
 
 }
 
@@ -145,7 +143,7 @@ void Person::unPack(const char* buffer)
 
 
 
-char* Person::Pack()
+void Person::Pack()
 {
 	char buffer[99];
 	char value[2];
