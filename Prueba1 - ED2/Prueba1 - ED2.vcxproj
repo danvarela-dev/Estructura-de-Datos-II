@@ -138,13 +138,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Person.h" />
+    <ClInclude Include="Persona.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Person.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="reg_var_21651030.cpp" />
+    <ClCompile Include="main .cpp" />
+    <ClCompile Include="Persona .cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,23 +1,23 @@
-#ifndef  PERSON_H
-#define PERSON_H
+#ifndef  PERSONA_H
+#define PERSONA_H
 #include <fstream>
 using namespace std;
-
 struct registro {
-    char LastName[99];
-    char FirstName[99];
-    char Address[99];
-    char City[99];
-    char State[99];
-    char ZipCode[99];
+    char LastName[99] = { 0 };
+    char FirstName[99] = { 0 };
+    char Address[99] = { 0 };
+    char City[99] = { 0 };
+    char State[99] = { 0 };
+    char ZipCode[99] = { 0 };
 };
-
 class Person {
 private:
     fstream file;
     registro reg;
 
 public:
+    Person();
+
     char LastName[99];
     char FirstName[99];
     char Address[99];
@@ -26,18 +26,18 @@ public:
     char ZipCode[99];
 
 
-
-    Person();
     void Print();
-
+    void leerArch();
     void unPack(const char*);
     char * Pack();
-    void Print();
     void PrintAll();
     void Write();
 
 };
 
-#endif // ! PERSON_H
+
+
+
+#endif // ! PERSONA_H
 
 
