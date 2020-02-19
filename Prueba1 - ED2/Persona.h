@@ -10,13 +10,13 @@ struct registro {
     char State[99] = { 0 };
     char ZipCode[99] = { 0 };
 };
-class Person {
+class Persona {
 private:
     fstream file;
     registro reg;
 
 public:
-    Person();
+    Persona();
 
     char LastName[99];
     char FirstName[99];
@@ -31,7 +31,7 @@ public:
     void unPack(const char*);
     void Pack();
     void PrintAll();
-    void Write();
+    void writeFile();
 
 };
 

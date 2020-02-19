@@ -13,7 +13,7 @@ struct registro{
 };
 
 
-class Person {
+class Persona {
 private:
     registro reg;
     ofstream oFilePersons;
@@ -26,7 +26,7 @@ public:
     char City_aux[16];
     char State_aux[3];
     char ZipCode_aux[10];
-    Person();
+    Persona();
 
     
 

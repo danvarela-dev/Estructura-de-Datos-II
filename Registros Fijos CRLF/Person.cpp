@@ -7,7 +7,7 @@
 using namespace std;
 
 
-void Person::readFile(const char* filename) {
+void Persona::readFile(const char* filename) {
 
     iFilePersons.open(filename, ios::in);
 
@@ -32,7 +32,7 @@ void Person::readFile(const char* filename) {
 
 }
 
-void Person::save_Registry()
+void Persona::save_Registry()
 {
     oFilePersons.open("Persons.dat", ios::app);
 
@@ -80,14 +80,14 @@ void Person::save_Registry()
     oFilePersons.close();
 }
 
-void Person::write(const char* firstName, const char* lastName, const char* address, const char* city, const char* state, const char* zipcode) {
+void Persona::write(const char* firstName, const char* lastName, const char* address, const char* city, const char* state, const char* zipcode) {
 
     oFilePersons << firstName << lastName << address << city <<  state <<  zipcode;
 
 }
 
 
-Person::Person() {
+Persona::Persona() {
     LastName_aux[0] = 0;
     FirstName_aux[0] = 0;
     Address_aux[0] = 0;

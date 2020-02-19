@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void Person::Print() {
+void Persona::Print() {
 
     if (LastName_aux != "0") {
         cout << "First Name: " << setw(15) << "Last Name:" << setw(15)
@@ -24,7 +24,7 @@ void Person::Print() {
         
 }
 
-void Person::readFile(const char* filename) {
+void Persona::readFile(const char* filename) {
 
     iFilePersons.open(filename, ios::in);
 
@@ -41,11 +41,11 @@ void Person::readFile(const char* filename) {
 }
 
 
-void Person::transferBuffer(registro buffer) {
+void Persona::transferBuffer(registro buffer) {
     
 }
 
-void Person::save_Registry()
+void Persona::save_Registry()
 {
     oFilePersons.open("Persons.dat", ios::app);
 
@@ -87,7 +87,7 @@ void Person::save_Registry()
     oFilePersons.close();
 }
 
-void Person::write(const char* firstName, const char* lastName, const char* address, const char* city, const char* state, const char* zipcode) {
+void Persona::write(const char* firstName, const char* lastName, const char* address, const char* city, const char* state, const char* zipcode) {
 
     oFilePersons << firstName << "\t\t"<< lastName << "\t\t"  << address << "\t\t" << city
         <<"\t\t" << state << "\t\t" << zipcode << "\n";
@@ -95,7 +95,7 @@ void Person::write(const char* firstName, const char* lastName, const char* addr
 }
 
 
-Person::Person() {
+Persona::Persona() {
     LastName_aux[0] = 0;
     FirstName_aux[0] = 0;
     Address_aux[0] = 0;

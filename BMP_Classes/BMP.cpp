@@ -152,7 +152,7 @@ void Headers::unPack() {
 	memcpy(&dataOffset, c+=2, 4);
 	//header Info
 	char* d = buffer_headerInfo;
-	memcpy(&headerSize, d, 4);
+	memcpy(&headerSize, d, 4	);
 	memcpy(&imageWidth, d += 4 , 4);
 	memcpy(&imageHeight, d += 4, 4);
 	memcpy(&planes, d += 4, 2);

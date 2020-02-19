@@ -1,7 +1,7 @@
 #include "Person.h"
 
 int main() {
-	Person person;
+	Persona person;
 	//person.save_Registry();
 	person.readFile("Persons.dat");
 	person.Print();

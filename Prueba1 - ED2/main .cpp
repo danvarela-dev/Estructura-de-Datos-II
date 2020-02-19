@@ -5,7 +5,8 @@
 
 int main() {
 
-	Person al;
-	al.Write();
+	Persona al;
+	al.writeFile();
+	al.leerArch();
 
-}
+}	

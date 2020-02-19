@@ -15,7 +15,7 @@ struct registro {
 #pragma pack(pop)
 
 
-class Person {
+class Persona {
 private:
     registro reg;
     ofstream oFilePersons;
@@ -28,7 +28,7 @@ public:
     char City_aux[16];
     char State_aux[5];
     char ZipCode_aux[10];
-    Person();
+    Persona();
 
 
 

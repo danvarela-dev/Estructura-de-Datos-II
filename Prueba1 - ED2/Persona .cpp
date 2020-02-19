@@ -7,7 +7,7 @@
 #pragma warning(disable : 4996)
 using namespace std;
 
-Person::Person()
+Persona::Persona()
 {
 	LastName[0] = 0;
 	FirstName[0] = 0;
@@ -17,7 +17,7 @@ Person::Person()
 	ZipCode[0] = 0;
 }
 
-void Person::Print() {
+void Persona::Print() {
 	ifstream iFilePersons;
 	iFilePersons.open("Persons.dat", ios::in);
 
@@ -43,7 +43,7 @@ void Person::Print() {
 	
 }
 
-void Person::PrintAll()
+void Persona::PrintAll()
 {
 	ifstream fileEn;
 
@@ -57,7 +57,7 @@ void Person::PrintAll()
 	file.close();
 }
 
-void Person::Write()
+void Persona::writeFile()
 {
 	
 	int quantity;
@@ -88,7 +88,7 @@ void Person::Write()
 
 }
 
-void Person::leerArch() {
+void Persona::leerArch() {
 	char archivo[20];
 
 	cout << "Nombre del archivo: " << endl;
@@ -104,9 +104,10 @@ void Person::leerArch() {
 	file.close();
 	unPack(buffer);
 
+
 }
 
-void Person::unPack(const char* buffer)
+void Persona::unPack(const char* buffer)
 {
 
 	char value[2];
@@ -143,10 +144,10 @@ void Person::unPack(const char* buffer)
 
 
 
-void Person::Pack()
+void Persona::Pack()
 {
 	char buffer[99];
-	char value[2];
+	char value[3];
 	if (strlen(LastName) <= 9) {
 		value[0] = '0';
 		sprintf(&value[1], "%d", strlen(LastName));
