@@ -83,10 +83,10 @@ void MyBitmap::msgEncryptor(string filename, string msg) {
 		cout << "Solo soporta archivos de 24 bits...\n";
 		return;
 	}
-	else if (bmpHeader.Reserved_1 != 0) {
+	/*else if (bmpHeader.Reserved_1 != 0) {
 		cout << "La imagen ya contiene un mensaje...\n";
 		return;
-	}
+	}*/
 	else {
 		cout << "Imagen valida | Encriptacion en proceso...\n";
 	}
@@ -277,7 +277,7 @@ void MyBitmap::getHiddenMsg() {
 
 
 	bufferASCII = bintoString(buff);
-
+	cout << bufferASCII;
 
 }
 

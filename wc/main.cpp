@@ -59,6 +59,10 @@ void wc(string filename) {
 
 
 void tail(string lines, string filename) {
+
+
+
+
 }
 
 
