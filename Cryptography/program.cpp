@@ -24,8 +24,6 @@ bool MyBitmap::isBitOn(int n, int k) {
 
 	int new_num = n >> (k - 1);
 
-	// if it results to '1' then bit is set, 
-	// else it results to '0' bit is unset 
 	return (new_num & 1);
 }
 
@@ -85,6 +83,10 @@ void MyBitmap::msgEncryptor(string filename, string msg) {
 		cout << "Solo soporta archivos de 24 bits...\n";
 		return;
 	}
+	else if (bmpHeader.Reserved_1 != 0) {
+		cout << "La imagen ya contiene un mensaje...\n";
+		return;
+	}
 	else {
 		cout << "Imagen valida | Encriptacion en proceso...\n";
 	}
@@ -132,7 +134,8 @@ void MyBitmap::msgDecryptor(string filename)
 		return;
 	}
 	else {
-		cout << "Imagen valida | Encriptacion en proceso...\n";
+		cout << "Imagen valida | Decodificacion en proceso...\n";
+
 	}
 
 
@@ -143,11 +146,11 @@ void MyBitmap::msgDecryptor(string filename)
 
 }
 
-void MyBitmap::msgEncryptorFile(string filename, string fileDest)
+void MyBitmap::msgEncryptorFile(string filename, string fileSrc)
 {
 
 	ifstream file;
-	file.open(fileDest, ios::in);
+	file.open(fileSrc, ios::in);
 	string buffer;
 	string line;
 	
@@ -158,13 +161,13 @@ void MyBitmap::msgEncryptorFile(string filename, string fileDest)
 		buffer += line;
 		buffer += "\n";
 	}
-	
-
-	
 
 	file.close();
 
+
+
 	msgEncryptor(filename, buffer);
+	cout << endl << "Saved succesfully into " << filename << "...";
 
 }
 
@@ -173,11 +176,10 @@ void MyBitmap::msgDecryptor2File(string filename, string filedest)
 	msgDecryptor(filename);
 
 	ofstream file;
-	file.open(filedest, ios::ate);
+	file.open(filedest, ios::trunc);
 	
 	file << bufferASCII;
 
-	cout << bufferASCII << endl;
 	file.close();
 
 }
@@ -215,7 +217,7 @@ void MyBitmap::validation(string filename)
 	readHeaders();
 	if (bmpHeader.Reserved_1 != 0)
 	{
-		cout << "100: Imagen no válida para ocultar el mensaje\n101: Imagen ya contiene un mensaje de " << bmpHeader.Reserved_1 / 8 << " caracteresn" << endl;
+		cout << "100: Imagen no valida para ocultar el mensaje\n101: Imagen ya contiene un mensaje de " << bmpHeader.Reserved_1 / 8 << " caracteres..." << endl;
 	}
 	else {
 		cout << "Valida: Imagen valida para guardar mensaje!" << endl;
@@ -276,7 +278,6 @@ void MyBitmap::getHiddenMsg() {
 
 	bufferASCII = bintoString(buff);
 
-	cout << "\nUncrypted Message: " << bufferASCII << endl;
 
 }
 

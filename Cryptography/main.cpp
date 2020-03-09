@@ -4,7 +4,7 @@
 
 int main(int argc, char** argv)
 {
-	
+
 	MyBitmap a;
 
 	string option = argv[1];
@@ -16,7 +16,7 @@ int main(int argc, char** argv)
 
 
 	if (option == "-o") {
-		
+
 		option2 = argv[3];
 		message = argv[4];
 
@@ -36,19 +36,21 @@ int main(int argc, char** argv)
 			option2 = argv[3];
 			if (option2 == "-f") {
 				a.msgDecryptor2File(filename, fileDest);
+				
 			}
-		}else{
+		}
+		else {
 			a.msgDecryptor(filename);
 		}
 
-		
-		}
-	else if(option == "-t"){
+
+	}
+	else if (option == "-t") {
 		filename = argv[2];
-		cout << "Max Alloc is: " << a.getMaxSpace(filename) <<" char(s)" <<endl;
+		cout << "Max Alloc is: " << a.getMaxSpace(filename) << " char(s)" << endl;
 	}
 	else if (option == "-v") {
-		
+
 		option2 = argv[1];
 		filename = argv[2];
 		a.validation(filename);
