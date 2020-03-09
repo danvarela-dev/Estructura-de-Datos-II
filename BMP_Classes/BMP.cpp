@@ -23,6 +23,7 @@ void MyBitmap::readPixels() {
 	int padding = (4 - (width * 3) % 4) % 4 ;
 
 		 
+	char* s;
 
 	for (int i = 0; i < width; i++)
 	{
@@ -32,8 +33,26 @@ void MyBitmap::readPixels() {
 			file_bmp.read((char*)&GREEN_aux, 1);
 			file_bmp.read((char*)&RED_aux, 1);
 			file_bmp.read((char*)&RESERVED4PADDING_aux, 1);
+			
+			uint8_t maskedBlue;
+			uint8_t mask = 1 << (sizeof(BLUE_aux) - 1);
+			maskedBlue = mask ^ (1 << (BLUE_aux - 1));
+		
 
-			cout << "B:" << (int)BLUE_aux << "\t\t\tG: " << (int)GREEN_aux << "\t\t\tR: " <<(int)RED_aux << endl;
+			uint8_t maskedGreen;
+			mask = 1 << (sizeof(GREEN_aux) - 1);
+			maskedGreen = mask ^ (1 << (GREEN_aux - 1));
+
+			uint8_t maskedRed;
+			mask = 1 << (sizeof(RED_aux) - 1);
+			maskedRed = mask ^ (1 << (RED_aux - 1));
+
+
+			cout << "unMasked BGR: " << (int)BLUE_aux << "\t" << (int)GREEN_aux << "\t" << (int)RED_aux << endl;
+			cout << "Masked BGR: " << maskedBlue << "\t"<< maskedGreen << "\t" << maskedRed << endl;
+
+
+			
 
 		}
 		file_bmp.seekg(bmpHeader.imageWidth % 4, std::ios::cur);

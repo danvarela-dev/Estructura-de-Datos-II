@@ -1,12 +1,10 @@
 #include "Humano.h"
 
 int main() {
-	Persona hum;
+	Humano hum;
 	//hum.writeFile();
 	//hum.Print();
 	cout << endl << endl;
 	hum.readFile();
-
-
 
 }

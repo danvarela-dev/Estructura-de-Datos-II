@@ -1,112 +1,110 @@
 #include "Empleado.h"
+#include <fstream>
 
-Empleado::Empleado()
-{
-	Nombres[0] = 0;
-	Apellidos[0] = 0;
-	Cedula[0] = 0;
-	Edad = 0;
-	Sueldo = 0;
+using namespace std;
 
-}
-
-void Empleado::print() {
-
+void Empleado::Print() {
 	cout << Nombres << "  "
 		<< Apellidos << " "
 		<< Cedula << "  "
-		/*<< Sueldo << "  "*/
-		<< Edad << endl
+		<< Sueldo << "  "
+		<< Edad << "\n"
 		<< flush;
 }
 
-
-void Empleado::unPack()
-{
-	int size = 0;
-	char* c = in_buffer;
-	
-	memcpy((char*)&size, c, 1);
-	memcpy(Nombres, c += 1, size);
-	Nombres[size] = 0;
-
-	memcpy((char*)&size, c += size, 1);
-	memcpy(Apellidos, c += 1, size);
-	Apellidos[size] = 0;
-
-	memcpy(Cedula, c += 1, 13);
-
-	//memcpy(&Sueldo, c += 13, 8);
-	memcpy(&Edad, c += 13, 4);
-
+Empleado::Empleado() {
+	BUFFER_REG = new char[MAX_BUFFER];
+	Nombres[0] = 0;
+	Apellidos[0] = 0;
+	Cedula[0] = 0;
+	Sueldo = 0;
+	Edad = 0;
+	BUFFER_REG[0] = 0;
+	SIZE = 0;
 }
 
-void Empleado::readAll()
-{
-	file_hData.open("Empleados.bin", fstream::in, fstream::binary);
-	if (!file_hData)
-	{
-		cerr << "Error opening file...\n";
-		return;
-	}
 
-	uint16_t sizeReg = 0;
-	
-
-	while (!file_hData.eof())
-	{
-		file_hData.read((char*)&sizeReg, 2);
-		file_hData.read((char*)&in_buffer, sizeReg);
-		unPack();
-		print();
-
-	}
-
+void Empleado::SetBuffer(const char* buffer, int s) {
+	SIZE = s;
+	memcpy(BUFFER_REG, buffer, SIZE);
+	UnPack();
 }
 
-void Empleado::writeAll()
-{
-	file_hData.open("Empleados.bin", ios::out | ios::app | ios::binary);
+int Empleado::CopyFromBuffer(char* source, char* target) {
+	unsigned char s = 0;
+	memcpy(&s, source, 1);
+	memcpy(target, ++source, s);
+	target[s] = 0;
+	return s;
+}
 
-	if (!file_hData)
-	{
-		cerr << "Error writing file...";
-		return;
-	}
 
-	cout << "Nombres : " << flush; cin.getline(Nombres, 99);
-	cout << "Apellidos : " << flush; cin.getline(Apellidos, 99);
-	cout << "Cedula : " << flush; cin.getline(Cedula, 14);
-	//cout << "Sueldo : " << flush; cin >> Sueldo;
-	cout << "Edad : " << flush; cin >> Edad;
+void Empleado::UnPack() {
+	unsigned char l_size = 0;
 
+	char* c = BUFFER_REG;
+	l_size = CopyFromBuffer(c, Nombres);
+	c += (l_size + 1);
+
+	l_size = CopyFromBuffer(c, Apellidos);
+	c += (l_size + 1);
+
+	memcpy(&Cedula, c, sizeof(Cedula) - 1);
+	c += (sizeof(Cedula) - 1);
+	Cedula[sizeof(Cedula) - 1] = 0;
+
+	memcpy(&Sueldo, c, sizeof(Sueldo));
+	c += sizeof(Sueldo);
+
+	memcpy(&Edad, c, sizeof(Edad));
+	c += sizeof(Edad);
+}
+
+int Empleado::Copy2Buffer(char* v) {
+	unsigned char l_size = 0;
+	l_size = strlen(v);
+
+	memcpy(&BUFFER_REG[SIZE], &l_size, 1);
+	memcpy(&BUFFER_REG[++SIZE], v, l_size);
+	SIZE += l_size;
+	return l_size;
+}
+
+
+void Empleado::Pack() {
+	unsigned char l_size = 0;
+	SIZE = 2;
+	Copy2Buffer(Nombres);
+	Copy2Buffer(Apellidos);
+
+	memcpy(&BUFFER_REG[SIZE], &Cedula, sizeof(Cedula) - 1);
+	SIZE += (sizeof(Cedula) - 1);
+
+	memcpy(&BUFFER_REG[SIZE], &Sueldo, sizeof(Sueldo));
+	SIZE += sizeof(Sueldo);
+
+	memcpy(&BUFFER_REG[SIZE], &Edad, sizeof(Edad));
+	SIZE += sizeof(Edad);
+
+	SIZE -= 2;
+	memcpy(&BUFFER_REG[0], &SIZE, sizeof(SIZE));
+	SIZE += 2;
+}
+
+void Empleado::Write() {
+	cout << "Nombres: " << flush; cin.getline(Nombres, sizeof(Nombres) - 1);
+	cout << "Apellidos: " << flush; cin.getline(Apellidos, sizeof(Nombres) - 1);
+	cout << "Cedula: " << flush; cin.getline(Cedula, sizeof(Cedula));
+	cout << "Sueldo: " << flush; cin >> Sueldo;
+	cin.ignore(numeric_limits <streamsize> ::max(), '\n'); 
+	cout << "Edad: " << flush; cin >> Edad;
+	cin.ignore(numeric_limits <streamsize> ::max(), '\n');
 	Pack();
-
-	
 }
 
-void Empleado::Pack()
-{
-	int fieldSize = 0;
-	
 
-	fieldSize = strlen(Nombres);
-	strcpy(in_buffer, (char*)&fieldSize);
-	strcat(in_buffer, Nombres);
-	
-	fieldSize = strlen(Apellidos);
-	strcat(in_buffer, (char*)&fieldSize);
-	strcat(in_buffer, Apellidos);
-
-	
-	strcat(in_buffer, (char*)&Sueldo);
-	strcat(in_buffer, (char*)&Edad);
-
-	regSize = strlen(in_buffer);
-
-	file_hData.write((char*)&regSize, 2);
-	file_hData.write((char*)&in_buffer, regSize);
-
-	file_hData.close();
+Empleado::~Empleado() {
+	delete[] BUFFER_REG;
 
 }
+

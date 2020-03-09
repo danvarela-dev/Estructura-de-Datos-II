@@ -44,7 +44,7 @@ public:
 	void setHeaderBuffer(const char*);
 	void setHeader_infoBuffer(const char*);
 	void setColorPallete_Buffer(char, char, char, char);
-
+	
 };
 
 class MyBitmap {

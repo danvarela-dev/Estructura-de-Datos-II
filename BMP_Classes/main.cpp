@@ -4,7 +4,7 @@
 
 int main(int argc, int **argv) {
 	MyBitmap A;
-	A.openBMP("m.bmp");
+	A.openBMP("BLU.bmp");
 	
 
 }

@@ -38,6 +38,15 @@ int main() {
     } while (opt != -1);*/
 
 
+      Metodos m;
+
+      char name[30] = "archivoPrueba";
+
+     /* m.metodo_uno(name);
+     
+      m.metodo_dos(name);*/
   
+      m.metodo_tres(name);
+   
 
 }

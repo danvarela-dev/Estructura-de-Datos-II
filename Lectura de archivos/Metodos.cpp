@@ -25,6 +25,7 @@ void Metodos::metodo_uno(char* name) {
 }
 
 void Metodos::metodo_dos(char* name) {
+
     strcat(name, ".txt");
 
     char cadena[128];
@@ -33,8 +34,6 @@ void Metodos::metodo_dos(char* name) {
         fe >> cadena;
         cout << cadena << " ";
     }
-
-
 
 }
 

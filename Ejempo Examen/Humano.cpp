@@ -119,7 +119,7 @@ void Persona::Pack() {
 	strcat(in_buffer, State);
 
 	l_size = strlen(ZipCode);
-	//GetSizeStr(l_size, str_size);
+	GetSizeStr(l_size, str_size);
 	strcat(in_buffer, (char*)&l_size);
 	strcat(in_buffer, ZipCode);
 	SIZE = strlen(in_buffer);

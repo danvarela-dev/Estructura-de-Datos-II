@@ -13,19 +13,19 @@ Persona::Persona()
 void Persona::Pack() 
 {
 
-	strcpy(in_buffer, "Nombres = ");
+	strcpy(in_buffer, "Nombres=");
 	strcat(in_buffer, Nombres);
 	strcat(in_buffer, ",");
-	strcpy(in_buffer, "Apellidos = ");
+	strcpy(in_buffer, "Apellidos=");
 	strcat(in_buffer, Apellidos);
 	strcat(in_buffer, ",");
-	strcpy(in_buffer, "Direccion = ");
+	strcpy(in_buffer, "Direccion= ");
 	strcat(in_buffer, Direccion);
 	strcat(in_buffer, ",");
-	strcpy(in_buffer, "Edad = ");
+	strcpy(in_buffer, "Edad=");
 	strcat(in_buffer, Edad);
 	strcat(in_buffer, ",");
-	strcpy(in_buffer, "Genero = ");
+	strcpy(in_buffer, "Genero=");
 	strcat(in_buffer,(char *)Genero);
 	strcat(in_buffer, "\r\n");
 
@@ -51,10 +51,10 @@ void Persona::readAll()
 
 	while (!filePersona.eof())
 	{
-		file_hData.read((char*)&sizeReg, 2);
+	/*	file_hData.read((char*)&sizeReg, 2);
 		file_hData.read((char*)&in_buffer, sizeReg);
 		UnPack();
-		Print();
+		Print();*/
 
 	}
 

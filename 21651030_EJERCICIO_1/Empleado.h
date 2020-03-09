@@ -1,46 +1,40 @@
-﻿#ifndef EMPLEADO_H
-#define EMPLEADO_H
+﻿#include <stdio.h>
+#include <stdint.h> 
+#include <stdlib.h>
 #include <iostream>
-#include <fstream>
+#include <cstring>
+#include <limits>
 
-#pragma warning(disable : 4996)
+#pragma pack(1)
+
+//100*2+13+8+4
+#define MAX_BUFFER 225
+#define MAX_FIELD 255
+
 
 using namespace std;
 
-
-
-class Empleado
-{
-
+class Empleado {
 private:
-
-	fstream file_hData;
-
+	void Pack();
+	void UnPack();
+	void GetSizeStr(int, char*);
+	int Copy2Buffer(char*);
+	int CopyFromBuffer(char*, char*);
 public:
-	Empleado();
-
-	uint16_t regSize;
-	
-
-	char in_buffer[226];
-
-
-	char Nombres[100];
-	char Apellidos[100];
+	uint16_t SIZE;
+	char* BUFFER_REG;
+	char Nombres[101];
+	char Apellidos[101];
 	char Cedula[14];
 	double Sueldo;
-	int Edad;
+	unsigned int Edad;
+	Empleado();
+	~Empleado();
+	void Print();
+	void SetBuffer(const char*, int);
+	void Write();
 
-	void Pack();
-	void unPack();
-	void readAll();
-	void writeAll();
-	void print();
 
 };
 
-
-
-
-
-#endif // !EMPLEADO_H
