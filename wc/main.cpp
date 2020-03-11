@@ -102,6 +102,7 @@ void tail(int lines, string filename) {
 
 
 	myfile.close();
+	
 
 }
 
