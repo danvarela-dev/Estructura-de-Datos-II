@@ -121,7 +121,8 @@ void MyBitmap::msgDecryptor(string filename)
 		return;
 	}
 	else {
-		cout << "Existe mensaje oculto" << endl;
+		/*cout << "Ya existe mensaje oculto" << endl;*/
+		
 	}
 
 	string signature = bmpHeader.signature;
@@ -215,15 +216,17 @@ void MyBitmap::validation(string filename)
 	}
 
 	readHeaders();
-	if (bmpHeader.Reserved_1 != 0)
-	{
-		cout << "100: Imagen no valida para ocultar el mensaje\n101: Imagen ya contiene un mensaje de " << bmpHeader.Reserved_1 / 8 << " caracteres..." << endl;
-	}
-	else {
-		cout << "Valida: Imagen valida para guardar mensaje!" << endl;
+	string sig = bmpHeader.signature;
 
-	}
+	 if(bmpHeader.Reserved_1 != 0){
+		cout << "101: Imagen ya contiene un mensaje de " << bmpHeader.Reserved_1 / 8 << " caracteres..." << endl;
+	 }
+	 else if(bmpHeader.bitsperPixel != 24 || sig != "BM"){
+		 cout << "100: Imagen no valida para ocultar el mensaje\n";
+	 }
 
+
+	 
 }
 
 void MyBitmap::getHiddenMsg() {
@@ -255,11 +258,11 @@ void MyBitmap::getHiddenMsg() {
 
 
 
-			if (padding != 0) { //si el width no es multiplo de 4
-				file_bmp.read((char*)&RESERVED4PADDING_aux, 1);
-				pixelData.push_back(RESERVED4PADDING_aux);
+			//if (padding != 0) { //si el width no es multiplo de 4
+			//	file_bmp.read((char*)&RESERVED4PADDING_aux, 1);
+			//	pixelData.push_back(RESERVED4PADDING_aux);
 
-			}
+			//}
 		}
 	}
 	string buff;
@@ -311,8 +314,8 @@ void MyBitmap::readPixels() {
 			file_bmp.read((char*)&GREEN_aux, 1);
 			file_bmp.read((char*)&RED_aux, 1);
 
-			if (padding != 0) //si el width no es multiplo de 4
-				file_bmp.read((char*)&RESERVED4PADDING_aux, 1);
+			//if (padding != 0) //si el width no es multiplo de 4
+			//	file_bmp.read((char*)&RESERVED4PADDING_aux, 1);
 
 			//cout << "B:" << (int)BLUE_aux << "\tG: " << (int)GREEN_aux << "\tR: " << (int)RED_aux << /*"\tReserved: " << (int)RESERVED4PADDING_aux <<*/ endl;
 		}
@@ -354,10 +357,10 @@ void MyBitmap::hideMsg_inPixels() {
 			file_bmp.read((char*)&RED_aux, 1);
 			pixelData.push_back(RED_aux);
 
-			if (padding != 0) { //si el width no es multiplo de 4
-				file_bmp.read((char*)&RESERVED4PADDING_aux, 1);
+			//if (padding != 0) { //si el width no es multiplo de 4
+			//	file_bmp.read((char*)&RESERVED4PADDING_aux, 1);
 
-			}
+			//}
 		}
 	}
 	int sizeBuffer = strlen(bufferBin.c_str());
@@ -381,9 +384,6 @@ void MyBitmap::hideMsg_inPixels() {
 	}
 
 }
-
-
-
 
 void MyBitmap::openBMP(const char* filename)
 {

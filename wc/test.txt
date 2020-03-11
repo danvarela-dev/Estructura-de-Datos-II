@@ -1,7 +1,43 @@
-Hola Hola Hola Hola Hola Hola Hola Hola Hola Hola Hola
+Chat Log   C:\Users\Danie\Documents\ChatLog Interpreting Training 2019_09_13 15_42.rtf
 
-
-
-
-Hola Hola Hola Hola Hola Hola Hola Hola Hola Hola Hola
-Hola Hola Hola Hola Hola Hola Hola Hola Hola Hola Hola
+Carlos Alfredo (to Everyone): 1:51 PM: hello
+Daniel Varela (to Gary): 1:51 PM: Gary I am on a meeting that I was required to assist at school, so I'm with some classmates and teachers so might hear some background noise. My apologies in advance.
+Gary (to Everyone): 1:51 PM: Hello!!
+Gary (Private): 1:52 PM: not a problem
+Daniel Varela (to Gary): 1:54 PM: Thanks!
+Daniel Varela (to Gary): 2:56 PM: Gary, I'm gonna have to change to a different room in about 15 mins, so I will be away for about 10 mins, to connect again to the meeting.
+Gary (to Everyone): 2:57 PM: seizures => ataques convulsivos
+Daniel Varela (to Gary): 3:07 PM: I'm gonna change rooms now.
+Gary (to Everyone): 3:12 PM: https://test.interpreters.biz
+Gary (to Everyone): 3:18 PM: Ladies and gentlemen do your best! Get started now please.
+Daniel Varela (to Gary): 3:19 PM: Gary, If I am not wrong you told us yesterday that the your site only works on chrome right?
+Gary (Private): 3:19 PM: correct
+Daniel Varela (to Gary): 3:22 PM: Oh god, I use opera, and I don't think its going to be downloaded using schools wifi. 
+Daniel Varela (to Gary): 3:23 PM: And I am not even sure if the distro if linux that I use has chrome available, can I do this when I get home using my desktops, because I do have windows on my desktop.
+Gary (Private): 3:23 PM: sure thats ok, 
+Gary (Private): 3:24 PM: what distribution of linux are you running?
+Daniel Varela (to Gary): 3:24 PM: fedora
+Daniel Varela (to Gary): 3:25 PM: let me check if its available, I haven't
+Gary (Private): 3:25 PM: it should work, fedora runs as smoothly as ubuntu, so it should work.
+Gary (Private): 3:25 PM: Let me know if you can have chrome on it, else I can disabled the instrisec chrome feature
+Gary (Private): 3:26 PM: I'm using chromes speech recog that's the only reason it works on chrome only, but if I disabled that one it can run on other browsers but safari and IE
+Daniel Varela (to Gary): 3:27 PM: Or let me try installing chrome using WINE
+Daniel Varela (to Gary): 3:27 PM: Is that, I did found chromium, but I am not sure if that is the same as Chrome
+Gary (Private): 3:28 PM: I dont think wine emmu has access to chrome because of the engine layer it runs on
+Gary (Private): 3:28 PM: chromium is not same as it doesn't have the speech tool, hang on
+Gary (Private): 3:28 PM: do you have a mac?
+Daniel Varela (to Gary): 3:28 PM: not a problem
+Daniel Varela (to Gary): 3:29 PM: no, i have a dell, but i work mostly on C++ so that's why I use linux
+Gary (Private): 3:30 PM: I see, but that's ok, you can try it from home.
+Gary (Private): 3:30 PM: I'll disable the chrome feature tomorrow so you guys can access it from any other browser.
+Daniel Varela (to Gary): 3:31 PM: I am sorry Gary, is there a time limit on doing this?
+Daniel Varela (to Gary): 3:31 PM: understood
+Gary (Private): 3:31 PM: No, there is no time limit, this platform is something I coded so you guys can practice whenever and as much as possible
+Gary (Private): 3:31 PM: so, do your best and if possible try practicing over the weekend at least 30 minutes a day.
+Daniel Varela (to Gary): 3:32 PM: That was my bad actually Gary,  I did not remember what you said about your page until I saw the actual page.
+Daniel Varela (to Gary): 3:32 PM: Will do, bye!
+Daniel Varela (to Gary): 3:33 PM: My respects on your page by the way!
+Gary (Private): 3:34 PM: not a problem Daniel, i just limited the website because i coded it over a year ago and I didnt have much coding knowledge back then. 
+Gary (Private): 3:35 PM: thank you and practice as much as possible please! have a great one
+Daniel Varela (to Gary): 3:39 PM: Okay, don't worry, I will practice.
+Daniel Varela (to Gary): 3:39 PM: Have good one as well.
