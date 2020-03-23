@@ -104,7 +104,7 @@ void Empleado::Write() {
 
 
 Empleado::~Empleado() {
-	delete[] BUFFER_REG;
+	
 
 }
 

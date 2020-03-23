@@ -6,7 +6,46 @@
 #pragma warning( disable : 4996)
 
 using namespace std;
+void generateIndexFile() {
 
+	char buffer[MAX_BUFFER];
+	char s[2];
+	uint16_t r_size;
+	Empleado p;
+	ifstream f;
+	ofstream g;
+	uint16_t reg_offset;
+	uint16_t fieldSize;
+
+
+	f.open("empleado.txt");
+	g.open("Index.bin", ios::binary | ios::trunc);
+	while (1)
+	{
+		reg_offset = f.tellg();
+		f.read(s, 2);
+		memcpy(&r_size, s, 2);
+		f.read(buffer, r_size);
+		if (f.eof()) break;
+		p.SetBuffer(buffer, r_size);
+
+
+
+		g.write((char*)&reg_offset, sizeof(reg_offset));
+		fieldSize = strlen(p.Nombres);
+
+		g.write((char*)&fieldSize, sizeof(fieldSize));
+		g.write(p.Nombres, strlen(p.Nombres));
+
+		fieldSize = strlen(p.Apellidos);
+		g.write((char*)&fieldSize, sizeof(fieldSize));
+		g.write(p.Apellidos, strlen(p.Apellidos));
+
+	}
+	f.close();
+	g.close();
+
+}
 void ReadAll() {
 	char buffer[MAX_BUFFER];
 	char s[2];
@@ -72,13 +111,12 @@ int WriteAll() {
 		if (strcmp(c, "N") == 0) break;
 	}
 	f.close();
+	generateIndexFile();
 	return 1;
 }
 
 
-
-void generateIndexFile() {
-	
+void generate_erasedIndex() {
 	char buffer[MAX_BUFFER];
 	char s[2];
 	uint16_t r_size;
@@ -90,7 +128,7 @@ void generateIndexFile() {
 
 
 	f.open("empleado.txt");
-	g.open("Index.bin", ios::binary | ios::trunc);
+	g.open("erasedIndex.txt", ios::binary | ios::trunc);
 	while (1)
 	{
 		reg_offset = f.tellg();
@@ -99,7 +137,6 @@ void generateIndexFile() {
 		f.read(buffer, r_size);
 		if (f.eof()) break;
 		p.SetBuffer(buffer, r_size);
-
 
 
 		g.write((char*)&reg_offset, sizeof(reg_offset));
@@ -115,7 +152,7 @@ void generateIndexFile() {
 	}
 	f.close();
 	g.close();
-	
+
 }
 
 
@@ -146,7 +183,6 @@ int getOffset(string name) {
 				found = 1;
 			}
 
-
 			f.read(fieldSize, sizeof(fieldSize));
 			memcpy(&fieldSize_int, fieldSize, sizeof(fieldSize));
 			f.read(buffer, fieldSize_int);
@@ -154,11 +190,26 @@ int getOffset(string name) {
 			if (found) return offset_int;
 
 			if (f.eof()) break;
-	
+
 		}
 		f.close();
 
 		return 0;
+}
+
+void eraseReg(string name) {
+
+	int offset = getOffset(name);
+
+	ofstream oF;
+	char a;
+	a = '\0';
+	
+	oF.open("empleado.txt");
+	oF.seekp(offset, ios::beg);
+	oF.write((char*)&a, 2);
+	
+	oF.close();
 }
 
 
@@ -170,8 +221,8 @@ void searchUsingOffset(string name) {
 	char s[2];
 	uint16_t r_size;
 
-
 	f.open("empleado.txt");
+
 
 	f.seekg(getOffset(name));
 
@@ -181,33 +232,11 @@ void searchUsingOffset(string name) {
 
 	p.SetBuffer(buffer, r_size);
 	p.Print();
-
-
-
-
 }
-
 
 int main(int argc, char** argv) {
 
-  //ReadAll();
-	// WriteAll();
-	//generateIndexFile();
-	//a.Print();
-	
-
-	clock_t tStart = clock();
-	searchUsingOffset("Mario Rolando");
-	printf("\n\nTime taken: %.2fs\n", (double)(clock() - (double)tStart) / CLOCKS_PER_SEC);
-
-	clock_t tStart2 = clock();
-	Empleado a =  getEmpleadoByName("Mario Rolando");
-	a.Print();
-	printf("\n\nTime taken: %.2fs\n", (double)(clock() - (double)tStart2) / CLOCKS_PER_SEC);
-
-
-
-
+	eraseReg("Mario Rolando");
 
 }
 
