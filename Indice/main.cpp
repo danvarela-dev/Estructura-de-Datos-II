@@ -5,15 +5,20 @@
 int main() {
 	ArchivoTexto a;
 	IndexFile i;
-	cout << "Cantidad de registros : ";
-	/*int cant = 0;
-	cin >> cant;
-	char ac[2];
-	cin.getline(ac, 2);
+	
 
-		a.agregarRegistro();*/
 
-	i.loadList();
+	//en el archivo de encabezado hay detalles sobre funciones
+
+
+	//a.agregarRegistro();
+	//i.createIndexFile();
+
+	
+		//a.compactar();
+		//a.eliminar("0501198800256");
+
+	//i.getList();
 	
 
 }

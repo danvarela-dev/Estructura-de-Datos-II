@@ -5,7 +5,6 @@
 #include <list>
 
 
-
 using namespace std;
 
 
@@ -18,7 +17,7 @@ public:
 
 	char buffer[101];
 
-
+		
 	char Cedula[14];
 	char Nombres[20];
 	char Apellidos[20];
@@ -27,19 +26,18 @@ public:
 	char Estado[7];
 	char ZipCode[5];
 };
-class IndexFile;
 
 class ArchivoTexto {
 public:
 	ArchivoTexto();
 
+	//agrega registro a archivo
 	void agregarRegistro();
 	int buscar(string);
 	void eliminar(string);
-	void compactar();
+	void compactar();//compacta el archivo de registros y tambien el de indices
 	char buffer_aux[100];
-	std::list<IndexFile> list;
-
+	
 private:
 	Registro reg;
 
@@ -47,8 +45,7 @@ private:
 
 class IndexFile {
 public:
-	IndexFile() = default;
-	ArchivoTexto arch;//para usar la list
+	IndexFile() {}
 
 	Registro reg;
 	char indexBuff[50];
@@ -56,13 +53,18 @@ public:
 	char ID[14];
 	int Offset;
 
+	//empaqueta variables de clase
 	void indexPack();
+	//desempaqueta variables de buffer leido de archivo
 	void indexUnPack();
+	//crea un archivo usando como llave primaria cedula
+	// y el offset, este se crea secuecialmente, no necesita ser ordenado
 	void createIndexFile();
 
-	void loadList();
-
-private:
+	//carga archivo de indices a lista
+	list<IndexFile> getList();
+	//escribe a archivo lista recibida de parametro
+	void setList(list<IndexFile>);
 
 };
 
@@ -71,4 +73,4 @@ private:
 
 
 
-#endif // !PROGRA8M_H
+#endif // !PROGRAM_H
