@@ -12,7 +12,7 @@ int main() {
 			//compacta el archivo
 			//a.compactar();
 		
-
+		
 			//cout << "Offset on File: " << a.buscar(ans) << endl;
 			
 
