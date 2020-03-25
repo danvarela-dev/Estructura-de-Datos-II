@@ -341,7 +341,10 @@ void IndexFile::loadList() {
 
 	}
 
-
+	for (auto it = arch.list.begin(); it != arch.list.end(); it++)
+	{
+		cout << it->ID << "|" << (int)it->Offset << endl;
+	}
 
 
 }
