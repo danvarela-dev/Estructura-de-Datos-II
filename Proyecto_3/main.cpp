@@ -1,9 +1,11 @@
-#include "zip.h"
+#include "zip2.h"
 
 
 int main() {
 	ZIP z;
 
-	z.openZip("Libro.zip");
+	z.unZip("test.zip" , "test2.zip");
+
+	//z.openZip("test.zip");
 
 }

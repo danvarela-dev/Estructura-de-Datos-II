@@ -1,4 +1,5 @@
-#include "zip.h"
+#include "zip2.h"
+#include <zip.h>
 
 ZIP::ZIP() {
 	Initialize();
@@ -19,16 +20,16 @@ void ZIP::Initialize() {
 	filename[0] = 0;
 	extraField[0] = 0;
 
-	 eocd_signature[0] = 0;
-	 numberOf_thisDisk = 0;
-	 diskwhereCD = 0;
-	 numberofCD_onDisk = 0;
-	 total_numerofCD_onDisk = 0;
-	 sizeOf_CD = 0;
-	 offSetCD = 0;
-	 eocd_commentLength = 0;
-	 eocd_comment[0] = 0;
-	
+	eocd_signature[0] = 0;
+	numberOf_thisDisk = 0;
+	diskwhereCD = 0;
+	numberofCD_onDisk = 0;
+	total_numerofCD_onDisk = 0;
+	sizeOf_CD = 0;
+	offSetCD = 0;
+	eocd_commentLength = 0;
+	eocd_comment[0] = 0;
+
 	CD_signature[0] = 0;
 	CD_versionMade = 0;
 	CD_versionNeeded = 0;
@@ -65,7 +66,10 @@ void ZIP::unPack() {
 	memcpy(&CRC32, c += 2, 4);
 	memcpy(&compressed_size, c += 4, 4);
 	memcpy(&uncompressed_size, c += 4, 4);
-
+	/*memcpy(&fileName_Length, c += 4, 2);
+	memcpy(&extraField_Length, c += 2, 2);
+	memcpy(&filename ,c += 2, fileName_Length);
+	memcpy(&extraField, c += fileName_Length, extraField_Length);*/
 
 	char* d = buff_eocd;
 	memcpy(&eocd_signature, d, 4);
@@ -96,12 +100,9 @@ void ZIP::unPack() {
 	memcpy(&CD_interalFileAttributes, e += 2, 2);
 	memcpy(&CD_externalFileAttributes, e += 2, 4);
 	memcpy(&CD_offsetLocalFileHeader, e += 4, 4);
-	/*memcpy(&CD_filename, e += 4, CD_fileName_Length);
-	memcpy(&CD_extraField, e += CD_fileName_Length, CD_extraField_Length);
-	memcpy(&CD_fileComment, e += CD_extraField_Length, CD_fileComment_Length);*/
-
-
-
+	//memcpy(&CD_filename, e += 4, CD_fileName_Length);
+	//memcpy(&CD_extraField, e += CD_fileName_Length, CD_extraField_Length);
+	//memcpy(&CD_fileComment, e += CD_extraField_Length, CD_fileComment_Length);
 
 }
 
@@ -118,20 +119,46 @@ void ZIP::readEOCD() {
 
 	zipFile.seekg(offset, ios_base::beg);
 	zipFile.read(buff_eocd, 22);
+
+	unPack();
 }
 
 void ZIP::readCD() {
-	zipFile.seekg(offSetCD, ios_base::beg);
-	zipFile.read(buff_CD, 46);
-}
-
-
-void ZIP::readLocalHeader() {
-	zipFile.seekg(26, ios_base::beg);
+	zipFile.seekg(offSetCD + 28, ios_base::beg);
 
 	char fileName_LengthStr[2];
 	char extraField_LengthStr[2];
 
+
+	zipFile.read(fileName_LengthStr, 2);
+	zipFile.read(extraField_LengthStr, 2);
+
+
+	memcpy(&CD_fileName_Length, fileName_LengthStr, 2);
+	memcpy(&CD_extraField_Length, extraField_LengthStr, 2);
+
+	zipFile.seekg(offSetCD + 46, ios_base::beg);
+
+	zipFile.read(CD_filename, CD_fileName_Length);
+	zipFile.read(CD_extraField, CD_extraField_Length);
+
+
+	zipFile.seekg(offSetCD, ios_base::beg);
+
+	zipFile.read(buff_CD, 46);
+	unPack();
+	
+	pos = CD_offsetLocalFileHeader;
+
+}
+
+
+void ZIP::readLocalHeader() {
+
+	zipFile.seekg(pos + 26, ios_base::beg);
+
+	char fileName_LengthStr[2];
+	char extraField_LengthStr[2];
 
 
 	zipFile.read(fileName_LengthStr, 2);
@@ -147,17 +174,49 @@ void ZIP::readLocalHeader() {
 	/*filename[fileName_Length] = '\0';
 	extraField[extraField_Length] = '\0';*/
 
-	zipFile.seekg(0, ios_base::beg);
+	zipFile.seekg(pos, ios_base::beg);
 
 	zipFile.read(buff_localHeader, 26);
-
+	pos = zipFile.tellg();
 
 	unPack();
-	print();
+
+	compressedBuffer = new char[compressed_size + 1];
+	zipFile.read(compressedBuffer, compressed_size);
+	compressedBuffer[strlen(compressedBuffer)] = '\0';
+
 }
 
+void ZIP::unZip(const char* name, const char* nameShort) {
+
+	
+		int err = 0;
+		const char* nameZip = name;
+		std::ofstream file;
+		zip* z = zip_open(nameZip, 0, &err);
+		struct zip_stat st;
+		zip_stat_init(&st);
+		zip_stat(z, name, 0, &st);
+		//Alloc memory for its uncompressed contents
+		char* contents = new char[st.size];
+		//Read the compressed file
+		zip_file* f = zip_fopen(z, name, 0);
+		zip_fread(f, contents, st.size);
+		zip_fclose(f);
+		file.open(nameShort);
+		file.seekp(0, std::ios::beg);
+		file.write(contents, st.size);
+		file.close();
+		//And close the archive
+		zip_close(z);
+		delete[] contents;
+	}
+
+
+
+
 void ZIP::print() {
-	cout << "**EOCD**" << endl;
+	/*cout << "**EOCD**" << endl;
 	cout << "EOCD Signature: " << eocd_signature[0] << eocd_signature[1] << (int)eocd_signature[2] << (int)eocd_signature[3] << endl;
 	cout << "Number of this disk: " << numberOf_thisDisk << endl;
 	cout << "Disk where central directory starts: " << diskwhereCD << endl;
@@ -167,8 +226,9 @@ void ZIP::print() {
 	cout << "Offset of start of central directory, relative to start of archive: " << offSetCD << endl;
 	cout << " Comment length (n) " << eocd_commentLength << endl << endl;
 
+
 	cout << "** CENTRAL DIRECTORY HEADER ** " << endl << endl;
-	cout << "Signature"  << CD_signature[0] <<CD_signature[1] << (int)CD_signature[2] << (int)CD_signature[3] << endl;
+	cout << "Signature" << CD_signature[0] << CD_signature[1] << (int)CD_signature[2] << (int)CD_signature[3] << endl;
 	cout << "Version made by : " << CD_versionMade << endl;
 	cout << "Version needed to extract (minimum): " << CD_versionNeeded << endl;
 	cout << "General purpose bit flag: " << CD_bitFlag << endl;
@@ -177,38 +237,39 @@ void ZIP::print() {
 	cout << "File last modification date: " << CD_lastMod_Date << endl;
 	cout << "CRC-32: " << CD_CRC32 << endl;
 	cout << "Compressed size: " << CD_compressed_size << endl;
-	cout << "Unompressed size: "<< CD_uncompressed_size << endl;
-	cout << "File name length (n): "<< CD_fileName_Length << endl;
-	cout << "Extra field length (m): "<< CD_extraField_Length << endl;
+	cout << "Unompressed size: " << CD_uncompressed_size << endl;
+	cout << "File name length (n): " << CD_fileName_Length << endl;
+	cout << "Extra field length (m): " << CD_extraField_Length << endl;
 	cout << "File comment length : " << CD_fileComment_Length << endl;
 	cout << "Disk number where file starts: " << CD_diskStart << endl;
-	cout << "Internal file attributes: "<< CD_interalFileAttributes << endl;
-	cout << "External file attributes: "<< CD_externalFileAttributes << endl;
-	cout << "Relative offset of local file header: " << CD_offsetLocalFileHeader <<endl;
-		
-
-				
-		
-		//CD_filename
-		//CD_extraField
-		//CD_fileComment
+	cout << "Internal file attributes: " << CD_interalFileAttributes << endl;
+	cout << "External file attributes: " << CD_externalFileAttributes << endl;
+	cout << "Relative offset of local file header: " << CD_offsetLocalFileHeader << endl;
+	cout << "Filename: " << CD_filename << endl;
+	cout << "Extrafield Comment: " << CD_fileComment << endl;
+*/
 
 
 
-	cout << "** LOCAL FILE HEADER **" << endl;
-	cout << "Signature: " << signature[0] << signature[1] << (int)signature[2] << (int)signature[3] << endl;
-	cout << "Version: " << version << endl;
-	cout << "Bit Flag: " << bitFlag << endl;
-	cout << "Compression: " << compression << endl;
-	cout << "Last Modification Time: " << lastMod_Time << endl;
-	cout << "Last Modification Date: " << lastMod_Date << endl;
-	cout << "CRC-32: " << CRC32 << endl;
-	cout << "Compressed Size: " << compressed_size << endl;
-	cout << "Uncompressed Size: " << uncompressed_size << endl;
-	cout << "File Name Length: " << fileName_Length << endl;
-	cout << "Extra Field Length: " << extraField_Length << endl;
-	cout << "Filename: " << filename << endl;
-	cout << "Extra Field: " << extraField << endl;
+	//CD_filename
+	//CD_extraField
+	//CD_fileComment
+
+	cout << "** local file header **" << endl;
+	cout << "signature: " << signature[0] << signature[1] << (int)signature[2] << (int)signature[3] << endl;
+	cout << "version: " << version << endl;
+	cout << "bit flag: " << bitFlag << endl;
+	cout << "compression: " << compression << endl;
+	cout << "last modification time: " << lastMod_Time << endl;
+	cout << "last modification date: " << lastMod_Date << endl;
+	cout << "crc-32: " << CRC32 << endl;
+	cout << "compressed size: " << compressed_size << endl;
+	cout << "uncompressed size: " << uncompressed_size << endl;
+	cout << "file name length: " << fileName_Length << endl;
+	cout << "extra field length: " << extraField_Length << endl;
+	cout << "filename: " << filename << endl;
+	cout << "extra field: " << extraField << endl;
+	cout << "Compressed Data: [ " << compressedBuffer <<" ]" << endl;
 
 }
 
@@ -216,10 +277,14 @@ void ZIP::openZip(string filename) {
 	zipFile.open(filename, ifstream::in, ifstream::binary);
 	readEOCD();
 	readCD();
-	readLocalHeader();
-	unPack();
+
+	for (int i = 0; i < total_numerofCD_onDisk; i++) {
+		readLocalHeader();
+		print();
+	}
 	zipFile.close();
 }
+
 
 int ZIP::getEOCD_offset() {
 
@@ -227,12 +292,6 @@ int ZIP::getEOCD_offset() {
 	int fileSize = zipFile.tellg();
 	zipFile.seekg(0, ios_base::beg);
 
-	while (1)
-	{
-		zipFile.read(signature, 4);
 
-	}
-
-
-
+	return 0;
 }
