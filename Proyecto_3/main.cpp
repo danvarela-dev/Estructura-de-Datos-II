@@ -1,11 +1,14 @@
-#include "zip2.h"
+#include "mainwindow.h"
+#include <QApplication>
+#include <zip.h>
 
+int main(int argc, char *argv[])
+{
 
-int main() {
-	ZIP z;
+      QApplication a(argc, argv);
+     DrawnWindow w;
+     w.show();
+     return a.exec();
 
-	z.unZip("test.zip" , "test2.zip");
-
-	//z.openZip("test.zip");
 
 }
